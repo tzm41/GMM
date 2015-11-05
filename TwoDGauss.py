@@ -24,12 +24,21 @@ class TwoDGauss:
 
     def mean_y(self):
         return self.mean_y
+        
+    def set_mean_y(self, mean_y):
+        self.mean_y = mean_y
 
     def var_x(self):
         return self.var_x
 
+	def set_var_x(self, var_x):
+        self.var_x = var_x
+        
     def var_y(self):
         return self.var_y
+    
+    def set_var_y(self, var_y):
+        self.var_y = var_y
 
     # bivariate pdf
     def std_dist(self, x_pt, y_pt):
