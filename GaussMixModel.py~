@@ -16,6 +16,4 @@ class GMM:
     
     def change_mean(self, index, mean):
 		old = self.models[index]
-		old[0].set_mean_x(old[0], mean.x)
-		old[0].set_mean_y(old[0], mean.y)
-		self.models.insert(index, old)
+		old[0] = mean
