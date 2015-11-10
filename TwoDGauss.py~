@@ -58,7 +58,7 @@ class TwoDGauss:
         
 if __name__ == '__main__':
     print "here"
-    something = TwoDGauss(1, 1, 0, 0)
+    something = TwoDGauss(1, 1, 0 ,0)
     print something.generate_point()    
     
 
