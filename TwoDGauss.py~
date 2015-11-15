@@ -10,7 +10,7 @@ class TwoDGauss:
     #     self.mean_x = numpy.mean(self.x)
     #     self.var_x = numpy.var(self.x)
 
-    def __init__(self, var_x, var_y, mean_x, mean_y):
+    def __init__(self,  mean_x, var_x, mean_y, var_y):
         self.var_x = var_x
         self.var_y = var_y
         self.mean_x = mean_x
@@ -53,12 +53,21 @@ class TwoDGauss:
         # generate x from x
         point_x = scipy.stats.norm.rvs(self.mean_x, self.var_x)
         point_y = scipy.stats.norm.rvs(self.mean_y, self.var_y)
-        return (point_x, point_y)
+        return point_x, point_y
    
         
 if __name__ == '__main__':
-    for i in range(0,10):
-        something = TwoDGauss(1, 1, 0, 0)
-        print str(i+1) + ": " + str(something.generate_point()) 
-    
+    gen_model1 = TwoDGauss(1, 1.0, 2, 1.5)
+    gen_model2 = TwoDGauss(3, 1.0, 3, 0.5)
+    gen_model3 = TwoDGauss(5, 0.5, 2, 0.5)
+    data = [600]
+    for x in range(1, 100):
+        print x
+        data[x] = gen_model1.generate_point()
+    for x in range(100, 300):
+        data[x] = gen_model2.generate_point()
+    for x in range(300, 600):
+        data[x] = gen_model3.generate_point()
 
+    for x in range(0, 600):
+        print data[x]
