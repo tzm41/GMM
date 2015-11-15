@@ -1,5 +1,6 @@
 from TwoDGauss import TwoDGauss
-
+# http://www.slideshare.net/jprasanth74/advanced-techniques-for-mobile-robotics 
+# see above link for variable assignments
 
 def em(data, var0, num_iters, verbose):
     var = var0
