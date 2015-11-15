@@ -60,14 +60,13 @@ if __name__ == '__main__':
     gen_model1 = TwoDGauss(1, 1.0, 2, 1.5)
     gen_model2 = TwoDGauss(3, 1.0, 3, 0.5)
     gen_model3 = TwoDGauss(5, 0.5, 2, 0.5)
-    data = [600]
+    data = []
     for x in range(0, 100):
-        print x
-        data[x] = gen_model1.generate_point()
+        data.insert(x, gen_model1.generate_point())
     for x in range(100, 300):
-        data[x] = gen_model2.generate_point()
+        data.insert(x, gen_model2.generate_point())
     for x in range(300, 600):
-        data[x] = gen_model3.generate_point()
+        data.insert(x, gen_model3.generate_point())
 
     for x in range(0, 600):
-        print data[x]
+        print(x, data[x])

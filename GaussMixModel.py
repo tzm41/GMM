@@ -1,5 +1,6 @@
 import TwoDGauss
 
+
 # Your class should support changing the mean, variance, and weight of any component.
 class GMM:
     def __init__(self, n):
@@ -10,7 +11,7 @@ class GMM:
         self.models.append([weight, model])
 
     def change_weight(self, index, weight):
-        if (weight < 0 or weight > 1):
+        if weight < 0 or weight > 1:
             old = self.models[index]
             old[0] = weight
             self.models.insert(index, old)
