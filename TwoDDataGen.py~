@@ -1,5 +1,0 @@
-
-# with normally distributed values (x,y)
-class TwoDDataGen:
-    # For each of x and y. 
-    #   initialize are the mean and variance
