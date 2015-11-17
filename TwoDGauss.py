@@ -41,12 +41,12 @@ class TwoDGauss:
         self.var_y = var_y
 
     # bivariate pdf
-    def std_dist(self, x_pt, y_pt):
+    def std_dist(self, x_pt, y_pt) -> float:
         sigma_x = math.sqrt(self.var_x)
         sigma_y = math.sqrt(self.var_y)
-        k = (1 / (2 * math.pi * self.var_x() * sigma_x * sigma_y))
-        exp = (-1 / 2) * ((math.pow(x_pt - self.mean_x(), 2) / self.var_x()) +
-                          (math.pow(y_pt - self.mean_y(), 2) / self.var_y()))
+        k = (1 / (2 * math.pi * self.var_x * sigma_x * sigma_y))
+        exp = (-1 / 2) * ((math.pow(x_pt - self.mean_x, 2) / self.var_x) +
+                          (math.pow(y_pt - self.mean_y, 2) / self.var_y))
         return k * math.pow(math.e, exp)
 
     def generate_point(self):

@@ -5,7 +5,7 @@ import TwoDGauss
 class GMM:
     def __init__(self, n):
         self.n = n
-        self.models = [[float, TwoDGauss]]    # float is the weight
+        self.models = [float, TwoDGauss]    # float is the weight
 
     def add_model(self, weight, model):
         self.models.append([weight, model])
