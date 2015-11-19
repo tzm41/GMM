@@ -35,36 +35,28 @@ def e_step(data, var):
             + w2 * moving_model2.std_dist(x_pt, y_pt) \
             + w3 * moving_model3.std_dist(x_pt, y_pt)
         c1.append(w1 * moving_model1.std_dist(x_pt, y_pt) / denom)
-    for i in range(0, 600):
-        x_pt, y_pt = data[i]
-        denom = w1 * moving_model1.std_dist(x_pt, y_pt) \
-            + w2 * moving_model2.std_dist(x_pt, y_pt) \
-            + w3 * moving_model3.std_dist(x_pt, y_pt)
         c2.append(w2 * moving_model2.std_dist(x_pt, y_pt) / denom)
-    for i in range(0, 600):
-        x_pt, y_pt = data[i]
-        denom = w1 * moving_model1.std_dist(x_pt, y_pt) \
-            + w2 * moving_model2.std_dist(x_pt, y_pt) \
-            + w3 * moving_model3.std_dist(x_pt, y_pt)
         c3.append(w3 * moving_model3.std_dist(x_pt, y_pt) / denom)
     return c1, c2, c3
 
 
 def m_step(data, ck):
     c1, c2, c3 = ck
-    w1, w2, w3 = sum(c1) / 600, sum(c2) / 600, sum(c3) / 600
-    mean_x1 = get_mean(c1, data, 100, 0)
-    mean_y1 = get_mean(c1, data, 100, 1)
-    mean_x2 = get_mean(c2, data, 200, 0)
-    mean_y2 = get_mean(c2, data, 200, 1)
-    mean_x3 = get_mean(c3, data, 300, 0)
-    mean_y3 = get_mean(c3, data, 300, 1)
-    var_x1 = get_var(c1, data, 100, 0, moving_model1.mean_x)
-    var_y1 = get_var(c1, data, 100, 1, moving_model1.mean_y)
-    var_x2 = get_var(c2, data, 200, 0, moving_model2.mean_x)
-    var_y2 = get_var(c2, data, 200, 1, moving_model2.mean_y)
-    var_x3 = get_var(c3, data, 300, 0, moving_model3.mean_x)
-    var_y3 = get_var(c3, data, 300, 1, moving_model3.mean_y)
+    s1, s2, s3 = sum(c1), sum(c2), sum(c3)
+    total = 600
+    w1, w2, w3 = s1 / total, s2 / total, s3 / total
+    mean_x1 = get_mean(c1, data, s1, 0)
+    mean_y1 = get_mean(c1, data, s1, 1)
+    mean_x2 = get_mean(c2, data, s2, 0)
+    mean_y2 = get_mean(c2, data, s2, 1)
+    mean_x3 = get_mean(c3, data, s3, 0)
+    mean_y3 = get_mean(c3, data, s3, 1)
+    var_x1 = get_var(c1, data, s1, 0, moving_model1.mean_x)
+    var_y1 = get_var(c1, data, s1, 1, moving_model1.mean_y)
+    var_x2 = get_var(c2, data, s2, 0, moving_model2.mean_x)
+    var_y2 = get_var(c2, data, s2, 1, moving_model2.mean_y)
+    var_x3 = get_var(c3, data, s3, 0, moving_model3.mean_x)
+    var_y3 = get_var(c3, data, s3, 1, moving_model3.mean_y)
     return w1, w2, w3, \
         mean_x1, mean_y1, mean_x2, mean_y2, mean_x3, mean_y3, \
         var_x1, var_y1, var_x2, var_y2, var_x3, var_y3
@@ -74,18 +66,18 @@ def m_step(data, ck):
 # cn - coefficient of model n
 # nk - number of points in model n
 # coordinate - 0 if x, 1 if y
-def get_mean(cn, data, nk: int, coordinate: int) -> float:
+def get_mean(cn, data, nk: float, coordinate: int) -> float:
     multiplicand = 0
-    for i in range(0, 600):
+    for i in range(0, len(cn)):
         # data[i][x] is the x/y coordinate of the point
         multiplicand += cn[i] * data[i][coordinate]
     mean = (1 / nk) * multiplicand
     return mean
 
 
-def get_var(cn, data, nk: int, coordinate: int, mean: float) -> float:
+def get_var(cn, data, nk: float, coordinate: int, mean: float) -> float:
     multiplicand = 0
-    for i in range(0, 600):
+    for i in range(0, len(cn)):
         multiplicand += cn[i] * (data[i][coordinate] - mean) * (data[i][coordinate] - mean)
     var = (1 / nk) * multiplicand
     return var
@@ -120,6 +112,7 @@ for x in range(300, 600):
     test_data.insert(x, gen_model3.generate_point())
 
 variable = em(test_data, init_var, 10, False)
+print("Weights {0:.5f}, {1:.5f}, {2:.5f}".format(variable[0], variable[1], variable[2]))
 print("Expected 1: {0:.5f} {1:.5f} {2:.5f} {3:.5f}".format(gen_model1.mean_x, gen_model1.mean_y,
                                                            gen_model1.var_x, gen_model1.var_y))
 print("Computed 1: {0:.5f} {1:.5f} {2:.5f} {3:.5f}\n".format(moving_model1.mean_x, moving_model1.mean_y,
