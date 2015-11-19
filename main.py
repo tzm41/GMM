@@ -90,9 +90,9 @@ def get_var(cn, data, nk: int, coordinate: int, mean: float) -> float:
     var = (1 / nk) * multiplicand
     return var
 
-moving_model1 = TwoDGauss(1, 1, 1, 1)
-moving_model2 = TwoDGauss(2, 1, 2, 1)
-moving_model3 = TwoDGauss(3, 1, 3, 1)
+moving_model1 = TwoDGauss(1, 1.0, 2, 1.5)
+moving_model2 = TwoDGauss(3, 1.0, 3, 0.5)
+moving_model3 = TwoDGauss(5, 0.5, 2, 0.5)
 
 # initial variables = (w1, w2, w3,
 # mean_x1, mean_y1, mean_x2, mean_y2, mean_x3, mean_y3,
@@ -119,7 +119,7 @@ for x in range(100, 300):
 for x in range(300, 600):
     test_data.insert(x, gen_model3.generate_point())
 
-var = em(test_data, init_var, 10, False)
+variable = em(test_data, init_var, 10, False)
 print("Expected 1: {0:.5f} {1:.5f} {2:.5f} {3:.5f}".format(gen_model1.mean_x, gen_model1.mean_y,
                                                            gen_model1.var_x, gen_model1.var_y))
 print("Computed 1: {0:.5f} {1:.5f} {2:.5f} {3:.5f}\n".format(moving_model1.mean_x, moving_model1.mean_y,
